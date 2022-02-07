@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { RecoilRoot } from "recoil";
+import { theme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -58,8 +59,10 @@ table {
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
-      <GlobalStyle />
-      <App />
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <App />
+      </ThemeProvider>
     </RecoilRoot>
   </React.StrictMode>,
   document.getElementById("root")

@@ -3,6 +3,9 @@ import { DefaultTheme } from "styled-components";
 export const theme: DefaultTheme = {
   colors: {
     bgColor: "powerblue",
-    textColor: "darkSlateGray",
+    cardColor: "gold",
+    boardColor: "DarkMagenta",
+    boardsColor: "lightblue",
+    textColor: "silver",
   },
 };
