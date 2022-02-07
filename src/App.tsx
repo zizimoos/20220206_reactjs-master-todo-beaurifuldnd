@@ -30,22 +30,22 @@ const Board = styled.div`
 `;
 
 function App() {
-  const [todoObject, setTodoObject] = useRecoilState(todoListState);
+  const [allBoards, setAllBoards] = useRecoilState(todoListState);
 
   const onDragEnd = ({ destination, source }: DropResult) => {
     if (!destination) return;
     if (destination.droppableId === source.droppableId) {
-      const newTodoArray = [...todoObject[source.droppableId]];
+      const newTodoArray = [...allBoards[source.droppableId]];
       const target = newTodoArray.splice(source.index, 1);
       newTodoArray.splice(destination.index, 0, ...target);
-      setTodoObject({ ...todoObject, [source.droppableId]: newTodoArray });
+      setAllBoards({ ...allBoards, [source.droppableId]: newTodoArray });
     }
     if (destination.droppableId !== source.droppableId) {
-      const sourceTodoArray = [...todoObject[source.droppableId]];
+      const sourceTodoArray = [...allBoards[source.droppableId]];
       const target = sourceTodoArray.splice(source.index, 1);
-      const newTodoArray = [...todoObject[destination.droppableId], ...target];
-      setTodoObject({
-        ...todoObject,
+      const newTodoArray = [...allBoards[destination.droppableId], ...target];
+      setAllBoards({
+        ...allBoards,
         [source.droppableId]: sourceTodoArray,
         [destination.droppableId]: newTodoArray,
       });
@@ -56,11 +56,11 @@ function App() {
     <DragDropContext onDragEnd={onDragEnd}>
       <Wrapper>
         <Boards>
-          {Object.keys(todoObject).map((boardId, index) => (
+          {Object.keys(allBoards).map((boardId, index) => (
             <DroppableComp
               boardId={boardId}
               key={boardId}
-              todoArray={todoObject[boardId]}
+              todoArray={allBoards[boardId]}
               index={index}
             />
           ))}

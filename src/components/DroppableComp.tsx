@@ -3,6 +3,8 @@ import DraggableComp from "./DraggableComp";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { ITodoUnitObject } from "../Recoil/atoms";
+import { useRecoilState } from "recoil";
+import { todoListState } from "../Recoil/atoms";
 
 const Wrapper = styled.div`
   width: 300px;
@@ -58,10 +60,23 @@ interface IDraggableProps {
 }
 
 const DroppableComp = ({ boardId, todoArray, index }: IDraggableProps) => {
+  const [allBoard, setAllBoard] = useRecoilState(todoListState);
   const { register, setValue, handleSubmit } = useForm<IForm>();
   const onValid = ({ toDo }: IForm) => {
+    const newTodoUnitObject: ITodoUnitObject = {
+      id: Date.now(),
+      text: toDo,
+    };
+
+    setAllBoard((allBoard) => {
+      return {
+        ...allBoard,
+        [boardId]: [newTodoUnitObject, ...allBoard[boardId]],
+      };
+    });
     setValue("toDo", "");
   };
+  localStorage.setItem("TODO_LIST", JSON.stringify(allBoard));
 
   return (
     <Wrapper>
